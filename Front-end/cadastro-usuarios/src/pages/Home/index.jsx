@@ -3,6 +3,20 @@ import './style.css'
 import Trash from '../../assets/trash.svg'
 import api from '../../services/api'
 
+
+
+/**
+ * Componente principal da página inicial.
+ * 
+ * Este componente permite cadastrar e listar usuários.
+ * Inclui um formulário para criar novos usuários e uma lista para exibir usuários existentes.
+ * 
+ * @component
+ * @example
+ * return (
+ *   <Home />
+ * );
+ */
 function Home() {
 
 const [users, setUsers] = useState([])
@@ -12,13 +26,23 @@ const inputAge = useRef()
 const inputEmail = useRef()
 
 
+/**
+   * Obtém a lista de usuários da API e atualiza o estado.
+   * 
+   * @async
+   * @function
+   */
   async function getUsers() {
     const usersFromApi = await api.get('/usuarios')
-
     setUsers(usersFromApi.data)
     }
 
-
+/**
+   * Cria um novo usuário usando os valores dos campos de entrada e atualiza a lista de usuários.
+   * 
+   * @async
+   * @function
+   */
   async function createUsers() {
     await api.post('/usuarios', {
       name: inputName.current.value,
@@ -29,10 +53,15 @@ const inputEmail = useRef()
     getUsers()
   }
 
-
+/**
+   * Deleta um usuário da lista com base no ID e atualiza a lista de usuários.
+   * 
+   * @param {number} id - O ID do usuário a ser deletado.
+   * @async
+   * @function
+   */
   async function deleteUsers(id) {
     await api.delete(`/usuarios/${id}`)
-    
     getUsers()
     }
 
